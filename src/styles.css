@@ -116,3 +116,32 @@ h2{letter-spacing:-.045em}
  outline-offset:3px;
 }
 @media(max-width:760px){.interest{min-height:52px;font-size:14px}}
+
+/* Carrossel de variações da Bolsa Kelly 3. */
+.photo{cursor:pointer}
+.photo:focus-visible{outline:3px solid rgba(198,157,54,.65);outline-offset:3px}
+.gallery-controls{position:absolute;left:12px;right:12px;bottom:12px;z-index:3;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.gallery-controls button{pointer-events:auto;width:30px;height:30px;display:grid;place-items:center;padding:0;border-radius:50%;background:rgba(255,255,255,.95);color:var(--wine);box-shadow:0 2px 8px rgba(35,27,24,.16)}
+.gallery-dots{display:flex;align-items:center;gap:6px;pointer-events:auto}
+.gallery-dots button{width:8px;height:8px;min-height:0;border:1px solid var(--wine);background:#fff;box-shadow:none}
+.gallery-dots button.active{background:var(--wine)}
+.details-media{position:relative;min-height:480px;overflow:hidden}
+.details-media>img{display:block;width:100%;height:100%;min-height:480px;object-fit:cover;object-position:center;background:transparent}
+.details-media .gallery-controls{bottom:18px}
+@media(max-width:760px){.details-media{min-height:270px}.details-media>img{height:270px;min-height:270px}}
+
+/* Os controles pertencem à foto; o texto de atacado fica livre abaixo dela. */
+.photo>.gallery-controls{bottom:66px}
+@media(max-width:760px){.photo>.gallery-controls{bottom:66px}}
+
+/* UI refinada do carrossel: controles alinhados à imagem e sem faixa vazia. */
+.photo-visual{position:relative;width:100%;overflow:hidden;background:#f5f3f1}
+.photo-visual .gallery-controls{left:14px;right:14px;bottom:14px;height:36px;padding:0 2px}
+.photo-visual .gallery-controls button{width:34px;height:34px;border:1px solid rgba(111,13,18,.12);background:rgba(255,255,255,.94);box-shadow:0 4px 12px rgba(35,27,24,.18);transition:transform .2s,background .2s,color .2s}
+.photo-visual .gallery-controls button:hover{background:#fff;color:var(--wine2);transform:scale(1.06)}
+.photo-visual .gallery-controls button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.photo-visual .gallery-dots{height:30px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,.88);box-shadow:0 4px 12px rgba(35,27,24,.12)}
+.photo-visual .gallery-dots button{width:8px;height:8px;border:1px solid var(--wine);box-shadow:none;transform:none}
+.photo-visual .gallery-dots button:hover{transform:scale(1.2)}
+.photo-visual .gallery-dots button.active{background:var(--wine);transform:scale(1.15)}
+@media(max-width:760px){.photo-visual .gallery-controls{left:12px;right:12px;bottom:12px}.photo-visual .gallery-controls button{width:36px;height:36px}.photo-visual .gallery-dots{padding:0 10px}}

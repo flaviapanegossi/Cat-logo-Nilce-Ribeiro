@@ -13,6 +13,8 @@ const P=(name,price,size,description,image,category)=>{
   ,'Bolsa Balenciaga G':'/catalog-original/product-26.avif'
   ,'Bolsa Baú Mole':'/catalog-original/product-28.avif'
   ,'Bolsa 3 Divisões':'/catalog-original/product-31.avif'
+  ,'Bolsa BIK - inspiração Hermès':'/catalog-original/product-36.avif'
+  ,'Bolsa Cesta':'/catalog-original/product-37.avif'
 };
  return {name,price,size,description,image:correctedImages[name]||`/catalog-original/product-${index}.avif`,category};
 };
