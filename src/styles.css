@@ -144,6 +144,8 @@ h2{letter-spacing:-.045em}
 .photo-visual .gallery-dots button{width:8px;height:8px;border:1px solid var(--wine);box-shadow:none;transform:none}
 .photo-visual .gallery-dots button:hover{transform:scale(1.2)}
 .photo-visual .gallery-dots button.active{background:var(--wine);transform:scale(1.15)}
+.photo-visual .gallery-dots button,.details-media .gallery-dots button{background:var(--dot-color,#fff);border-color:rgba(111,13,18,.55)}
+.photo-visual .gallery-dots button.active,.details-media .gallery-dots button.active{background:var(--dot-color,#fff);border:2px solid var(--wine);box-shadow:0 0 0 2px var(--gold)}
 @media(max-width:760px){.photo-visual .gallery-controls{left:10px;right:10px;bottom:10px}.photo-visual .gallery-controls>button{width:32px;height:32px}.photo-visual .gallery-dots{padding:0 9px;gap:5px}.photo-visual .gallery-dots button{width:9px;height:9px;min-width:9px;min-height:9px}}
 
 /* Experiência mobile: navegação fixa, leitura confortável e áreas de toque maiores. */
