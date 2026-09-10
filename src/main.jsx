@@ -196,9 +196,10 @@ function App(){
    <nav>
     <button className="icon mobile" aria-label="Abrir menu" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button>
     <a className="logo" href="#inicio"><span>NR</span><small>Nilce Ribeiro</small><em>SINCE 1995</em></a>
-    <div className={'links '+(menu?'open':'')}><a href="#catalogo">Catálogo</a></div>
+    <div className={'links '+(menu?'open':'')}><a href="#catalogo" onClick={()=>setMenu(false)}>Catálogo</a></div>
     <div className="actions"><label><button className="search-trigger" type="button" aria-label="Focar busca" onClick={()=>searchRef.current?.focus()}><Search size={18}/></button><input ref={searchRef} value={query} onChange={e=>setQuery(e.target.value)} placeholder="Buscar modelo" aria-label="Buscar modelo"/></label><button className="icon" aria-label="Abrir carrinho" onClick={()=>setCartOpen(true)}><ShoppingBag/><b>{cart.reduce((n,x)=>n+x.qty,0)}</b></button></div>
-   </nav>
+  </nav>
+  <div className="mobile-search"><Search size={17}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Buscar modelo" aria-label="Buscar modelo no catálogo"/></div>
   </header>
   <main id="inicio">
    <section className="hero"><div><p className="eyebrow">Catálogo</p><h1><span className="hero-title-line">Bolsa</span><br/><span className="hero-title-line">de couro</span><br/><i>legítimo.</i></h1><p className="lead">Fabricação própria, atacado e varejo. <span className="hero-support-line">Atendemos todo Brasil.</span></p><a className="button" href="#catalogo">Ver catálogo <ArrowUpRight size={17}/></a></div><div className="hero-card"><img src="/catalog-hero.png" alt="Bolsas de couro legítimo"/><span>Nilce Ribeiro<br/><strong>fabricação própria.</strong></span></div></section>
@@ -206,11 +207,11 @@ function App(){
    <section id="catalogo" className="catalog">
     <div className="section-head"><div><p className="eyebrow">Coleção completa</p><h2>Escolha seus<br/><i>modelos.</i></h2></div><p className="count">{filtered.length} modelos</p></div>
     <div className="filters"><SlidersHorizontal size={16}/>{categories.map(c=><button className={category===c?'active':''} onClick={()=>setCategory(c)} key={c}>{c}</button>)}<button className="sort">Mais recentes <ChevronDown size={16}/></button></div>
-    <div className="grid">{filtered.map((p,i)=>{const gallery=galleryFor(p);const slideIndex=slideIndexes[p.name]||0;return <article className="product" key={p.name}>
+    <div className="grid">{filtered.length?filtered.map((p,i)=>{const gallery=galleryFor(p);const slideIndex=slideIndexes[p.name]||0;return <article className="product" key={p.name}>
      <div className="photo" role="button" tabIndex={0} onClick={()=>openDetails(p,slideIndex)} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDetails(p,slideIndex)}}} aria-label={'Ver detalhes da '+p.name}><div className="photo-visual"><img key={normalizedImage(gallery[slideIndex])} src={normalizedImage(gallery[slideIndex])} alt={p.name} decoding="async"/><div className="photo-shade"/>{i<3&&<span className="badge">Mais vendidas</span>}<span className="tone">Couro legítimo</span>{gallery.length>1&&<div className="gallery-controls" onPointerDown={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()}><button type="button" aria-label="Imagem anterior" onClick={e=>{e.stopPropagation();changeSlide(p.name,slideIndex-1,gallery.length)}}><ChevronLeft size={16}/></button><div className="gallery-dots" aria-label="Variações de cor">{gallery.map((_,index)=><button type="button" className={index===slideIndex?'active':''} aria-label={'Ver variação '+(index+1)} onClick={e=>{e.stopPropagation();changeSlide(p.name,index,gallery.length)}} key={index}/>)}</div><button type="button" aria-label="Próxima imagem" onClick={e=>{e.stopPropagation();changeSlide(p.name,slideIndex+1,gallery.length)}}><ChevronRight size={16}/></button></div>}</div></div>
      <button className="heart" onClick={()=>setLiked(l=>l.includes(p.name)?l.filter(x=>x!==p.name):[...l,p.name])} aria-label="Favoritar"><Heart size={18} fill={liked.includes(p.name)?'currentColor':'none'}/></button>
      <div className="product-info"><div className="meta"><span>{p.category}</span><span>NR {String(i+1).padStart(2,'0')}</span></div><h3>{p.name}</h3><p>{p.description}</p><div className="size">{formatMeasurements(p.size)}</div><div className="price"><strong>R$ {p.price}</strong></div><button className="interest" onClick={()=>addAndShow(p)} aria-label={'Adicionar '+p.name+' à seleção'}>Adicionar esta bolsa <ShoppingBag size={17}/></button></div>
-    </article>})}</div>
+    </article>}):<div className="empty"><Search size={28}/><p>Nenhum modelo encontrado.</p><button onClick={()=>{setQuery('');setCategory('Todos')}}>Limpar filtros</button></div>}</div>
    </section>
    <section className="terms"><div><p className="eyebrow">Condições especiais</p><h2>Monte seu pedido<br/><i>do seu jeito.</i></h2></div><div><p>Valor de Atacado</p><strong>20% de desconto para pagamento à vista</strong><strong>15% de desconto pagamento a prazo</strong><small>No atacado, o pedido mínimo é de 7 bolsas. Escolha os modelos e envie tudo de uma vez pelo WhatsApp.</small></div></section>
   </main>
