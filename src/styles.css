@@ -144,7 +144,7 @@ h2{letter-spacing:-.045em}
 .photo-visual .gallery-dots button{width:8px;height:8px;border:1px solid var(--wine);box-shadow:none;transform:none}
 .photo-visual .gallery-dots button:hover{transform:scale(1.2)}
 .photo-visual .gallery-dots button.active{background:var(--wine);transform:scale(1.15)}
-@media(max-width:760px){.photo-visual .gallery-controls{left:12px;right:12px;bottom:12px}.photo-visual .gallery-controls button{width:36px;height:36px}.photo-visual .gallery-dots{padding:0 10px}}
+@media(max-width:760px){.photo-visual .gallery-controls{left:10px;right:10px;bottom:10px}.photo-visual .gallery-controls>button{width:32px;height:32px}.photo-visual .gallery-dots{padding:0 9px;gap:5px}.photo-visual .gallery-dots button{width:9px;height:9px;min-width:9px;min-height:9px}}
 
 /* Experiência mobile: navegação fixa, leitura confortável e áreas de toque maiores. */
 header{position:sticky;top:0;z-index:8;background:#fffaf6;box-shadow:0 3px 14px rgba(35,27,24,.06)}
@@ -227,3 +227,11 @@ header nav{position:relative;top:auto}
   .cart-item>button{width:40px;height:40px;display:grid;place-items:center}
 }
 @media(min-width:761px){.mobile-search{display:none!important}}
+
+/* Indicadores compactos no mobile; só as setas mantêm área de toque ampliada. */
+@media(max-width:760px){
+  .photo-visual .gallery-dots{height:26px}
+  .photo-visual .gallery-dots button,
+  .details-media .gallery-dots button{width:9px;height:9px;min-width:9px;min-height:9px;padding:0}
+  .photo-visual .gallery-controls>button{width:32px;height:32px;min-width:32px;min-height:32px}
+}
