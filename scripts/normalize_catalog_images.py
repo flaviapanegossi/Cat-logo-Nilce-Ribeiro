@@ -47,7 +47,13 @@ def normalize(path: Path) -> None:
     image.thumbnail((TARGET, TARGET), Image.Resampling.LANCZOS)
     canvas = studio_background()
     canvas.alpha_composite(image, ((CANVAS - image.width) // 2, (CANVAS - image.height) // 2))
-    canvas.save(OUTPUT / f"{path.stem}.png", optimize=True)
+    canvas.convert("RGB").save(
+        OUTPUT / f"{path.stem}.jpg",
+        format="JPEG",
+        quality=82,
+        optimize=True,
+        progressive=True,
+    )
 
 
 OUTPUT.mkdir(parents=True, exist_ok=True)

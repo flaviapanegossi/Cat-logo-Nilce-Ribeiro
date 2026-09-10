@@ -10,7 +10,7 @@ const formatMeasurements=size=>{
  const labels=['A','L','Fundo'];
  return values.map((value,index)=>`${labels[index]||'Medida'}: ${/cm$/i.test(value)?value:`${value} cm`}`).join(' · ');
 };
-  const normalizedImage=image=>`/catalog-normalized/${image.split('/').pop().replace(/\.[^.]+$/,'.png')}?v=20260909-42`;
+  const normalizedImage=image=>`/catalog-normalized/${image.split('/').pop().replace(/\.[^.]+$/,'.jpg')}?v=20260909-43`;
 const galleryImages={
  'Bolsa Kelly 3':[
   '/catalog-original/product-14.avif',
