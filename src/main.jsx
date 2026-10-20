@@ -1,4 +1,4 @@
-import React,{useMemo,useRef,useState} from 'react';
+import React,{useEffect,useMemo,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Search,ShoppingBag,Menu,X,ArrowUpRight,ChevronDown,ChevronLeft,ChevronRight,ChevronUp,Heart,MessageCircle,Ruler,Box,SlidersHorizontal,Trash2} from 'lucide-react';
 import {products} from './catalogData';
@@ -10,7 +10,7 @@ const formatMeasurements=size=>{
  const labels=['A','L','Fundo'];
  return values.map((value,index)=>`${labels[index]||'Medida'}: ${/cm$/i.test(value)?value:`${value} cm`}`).join(' · ');
 };
-const normalizedImage=image=>`/catalog-normalized/${image.split('/').pop().replace(/\.[^.]+$/,'.jpg')}?v=20260909-44`;
+const normalizedImage=image=>`/catalog-normalized/${image.split('/').pop().replace(/\.[^.]+$/,'.jpg')}?v=20261020-white`;
 const variationColor=image=>{
  const name=image.toLowerCase();
  if(/preta|preto|black/.test(name))return '#171416';
@@ -190,6 +190,21 @@ function App(){
  const [cartOpen,setCartOpen]=useState(false);
  const [slideIndexes,setSlideIndexes]=useState({});
  const [modalSlide,setModalSlide]=useState(0);
+ const [zoom,setZoom]=useState(null);
+ const zoomClose=useRef(null);
+ const zoomTrigger=useRef(null);
+ useEffect(()=>{
+  if(!zoom)return;
+  const previous=document.body.style.overflow;
+  document.body.style.overflow='hidden';
+  zoomClose.current?.focus();
+  const keydown=e=>{
+   if(e.key==='Escape'){e.preventDefault();setZoom(null)}
+   if(e.key==='Tab'){e.preventDefault();zoomClose.current?.focus()}
+  };
+  document.addEventListener('keydown',keydown);
+  return ()=>{document.body.style.overflow=previous;document.removeEventListener('keydown',keydown);zoomTrigger.current?.focus()};
+ },[zoom]);
  const searchRef=useRef(null);
  const categories=['Todos','Clássicas','Estruturadas','Grandes','Pequenas','Mochilas'];
  const catalogProducts=useMemo(()=>[...products,...additionalProducts],[ ]);
@@ -233,7 +248,8 @@ function App(){
   </main>
   <footer><a className="logo" href="#inicio"><span>NR</span><small>Nilce Ribeiro</small><em>SINCE 1995</em></a><p>Bolsas de couro legítimo · Fabricação própria</p><span>© 2026 Nilce Ribeiro · Catálogo desenvolvido por <a className="creator-link" href="https://www.instagram.com/midioramarketing/" target="_blank" rel="noreferrer">Midiora</a></span></footer>
   <button className="back-to-top" type="button" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})} aria-label="Voltar ao início"><ChevronUp size={19}/></button>
-  {selected&&(()=>{const gallery=galleryFor(selected);const image=gallery[modalSlide]||gallery[0];return <div className="overlay" onClick={()=>setSelected(null)}><section className="details" onClick={e=>e.stopPropagation()}><button className="close" onClick={()=>setSelected(null)} aria-label="Fechar"><X/></button><div className="details-media"><img src={normalizedImage(image)} alt={selected.name} decoding="async"/>{gallery.length>1&&<div className="gallery-controls"><button type="button" aria-label="Imagem anterior" onClick={()=>setModalSlide(index=>(index-1+gallery.length)%gallery.length)}><ChevronLeft size={18}/></button><div className="gallery-dots" aria-label="Variações de cor">{gallery.map((image,index)=><button type="button" className={index===modalSlide?'active':''} style={{'--dot-color':variationColor(image)}} aria-label={'Ver variação '+(index+1)} onClick={()=>setModalSlide(index)} key={index}/>)}</div><button type="button" aria-label="Próxima imagem" onClick={()=>setModalSlide(index=>(index+1)%gallery.length)}><ChevronRight size={18}/></button></div>}</div><div><p className="eyebrow">{selected.category} · Couro legítimo</p><h2>{selected.name}</h2><div className="detail-retail"><strong className="detail-price">R$ {selected.price}</strong><span>Valor no varejo</span></div><div className="detail-discounts"><strong>Atacado</strong><span>20% de desconto para pagamento à vista</span><span>15% de desconto no pagamento a prazo</span></div><p className="detail-description">{selected.description}</p><dl><div><dt><Ruler size={15}/> Medidas</dt><dd>{formatMeasurements(selected.size)}</dd></div><div><dt><Box size={15}/> Atacado</dt><dd>A partir de 7 bolsas</dd></div></dl><button className="button" onClick={()=>{addAndShow(selected);setSelected(null)}} aria-label={'Adicionar '+selected.name+' à seleção'}>Adicionar esta bolsa <ShoppingBag size={17}/></button></div></section></div>})()}
+{selected&&(()=>{const gallery=galleryFor(selected);const image=gallery[modalSlide]||gallery[0];return <div className="overlay" onClick={()=>setSelected(null)}><section className="details" onClick={e=>e.stopPropagation()}><button className="close" onClick={()=>setSelected(null)} aria-label="Fechar"><X/></button><div className="details-media"><button ref={zoomTrigger} type="button" className="details-zoom-trigger" aria-label={'Ampliar imagem da '+selected.name} onClick={()=>setZoom({image,name:selected.name})}><img src={normalizedImage(image)} alt={selected.name} decoding="async"/><span>Clique para ampliar</span></button>{gallery.length>1&&<div className="gallery-controls"><button type="button" aria-label="Imagem anterior" onClick={()=>setModalSlide(index=>(index-1+gallery.length)%gallery.length)}><ChevronLeft size={18}/></button><div className="gallery-dots" aria-label="Variações de cor">{gallery.map((image,index)=><button type="button" className={index===modalSlide?'active':''} style={{'--dot-color':variationColor(image)}} aria-label={'Ver variação '+(index+1)} onClick={()=>setModalSlide(index)} key={index}/>)}</div><button type="button" aria-label="Próxima imagem" onClick={()=>setModalSlide(index=>(index+1)%gallery.length)}><ChevronRight size={18}/></button></div>}</div><div><p className="eyebrow">{selected.category} · Couro legítimo</p><h2>{selected.name}</h2><div className="detail-retail"><strong className="detail-price">R$ {selected.price}</strong><span>Valor no varejo</span></div><div className="detail-discounts"><strong>Atacado</strong><span>20% de desconto para pagamento à vista</span><span>15% de desconto no pagamento a prazo</span></div><p className="detail-description">{selected.description}</p><dl><div><dt><Ruler size={15}/> Medidas</dt><dd>{formatMeasurements(selected.size)}</dd></div><div><dt><Box size={15}/> Atacado</dt><dd>A partir de 7 bolsas</dd></div></dl><button className="button" onClick={()=>{addAndShow(selected);setSelected(null)}} aria-label={'Adicionar '+selected.name+' à seleção'}>Adicionar esta bolsa <ShoppingBag size={17}/></button></div></section></div>})()}
+{zoom&&<div className="image-zoom" role="dialog" aria-modal="true" aria-label={'Imagem ampliada da '+zoom.name} onClick={()=>setZoom(null)}><button ref={zoomClose} className="close" aria-label="Fechar imagem ampliada" onClick={()=>setZoom(null)}><X/></button><img src={normalizedImage(zoom.image).replace('/catalog-normalized/','/catalog-zoom/')} alt={zoom.name+' — imagem completa'} onClick={e=>e.stopPropagation()}/></div>}
   {cartOpen&&<div className="overlay" onClick={()=>setCartOpen(false)}><section className="cart" onClick={e=>e.stopPropagation()}><button className="close" onClick={()=>setCartOpen(false)} aria-label="Fechar"><X/></button><p className="eyebrow">Sua seleção</p><h2>Bolsas <i>selecionadas.</i></h2><p className="cart-note">Todos os modelos escolhidos não caracterizam uma compra, apenas indicam que você deseja mais informações.</p>{cart.length?<><div className="cart-items">{cart.map(item=><div className="cart-item" key={item.name}><img src={normalizedImage(item.image)} alt=""/><div><strong>{item.name}</strong><span>R$ {item.price} · {formatMeasurements(item.size)}</span><small>Quantidade: {item.qty}</small></div><button onClick={()=>setCart(c=>c.filter(x=>x.name!==item.name))} aria-label={'Remover '+item.name}><Trash2 size={17}/></button></div>)}</div><button className="button" onClick={send}>Enviar seleção pelo WhatsApp <MessageCircle size={17}/></button></>:<div className="cart-empty"><ShoppingBag size={30}/><p>Seu carrinho está vazio.</p><button onClick={()=>setCartOpen(false)}>Voltar ao catálogo</button></div>}</section></div>}
  </>;
 }

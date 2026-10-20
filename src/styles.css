@@ -247,3 +247,17 @@ header nav{position:relative;top:auto}
   .details-media .gallery-dots button{width:9px;height:9px;min-width:9px;min-height:9px;padding:0}
   .photo-visual .gallery-controls>button{width:32px;height:32px;min-width:32px;min-height:32px}
 }
+
+/* One canvas and scale for every catalog photo; never crop the product. */
+.photo,.photo-visual{background:#fff}
+.photo .photo-visual img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain;padding:0;background:#fff}
+.details>div.details-media{padding:0;background:#fff;display:flex;align-items:center;min-width:0}
+.details-zoom-trigger{display:block;position:relative;width:100%;padding:0;border:0;background:#fff;cursor:zoom-in}
+.details-zoom-trigger img{display:block;width:100%;height:auto;max-height:75vh;object-fit:contain;aspect-ratio:1;background:#fff}
+.details-zoom-trigger span{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:6px 12px;border-radius:20px;background:#fff;color:var(--wine);font-size:12px;box-shadow:0 1px 8px #0002}
+.details-media:has(.gallery-controls) .details-zoom-trigger span{bottom:64px}
+.details-zoom-trigger:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.image-zoom{position:fixed;inset:0;z-index:1000;background:#fff;display:flex;align-items:center;justify-content:center;padding:48px 12px;cursor:zoom-out}
+.image-zoom>img{display:block;width:100%;height:100%;object-fit:contain;min-height:0;cursor:default}
+.image-zoom .close{position:absolute;top:12px;right:12px;z-index:1;border:1px solid #ddd}
+@media(max-width:760px){.details-zoom-trigger img{max-height:60vh}.details>div.details-media{min-height:0}}
