@@ -1,4 +1,12 @@
 export const additionalProducts=[
+ {name:'Bolsa Escama',price:'620,00',size:'29 × 36 × 18 cm',description:'Dois bolsos pequenos na parte frontal, um bolso traseiro e dois bolsos internos, sendo um com zíper e outro sem zíper.',image:'/catalog-original/escama-estudio.png',category:'Grandes'},
+ {name:'Mochila Lia',price:'490,00',size:'34 × 26 × 8 cm',description:'Um bolso frontal, duas divisórias e dois bolsos, sendo um com zíper e outro sem zíper.',image:'/catalog-original/mochila-lia-estudio.png',category:'Mochilas'},
+ {name:'Bolsa Banana',price:'290,00',size:'29 × 17 × 8 cm',description:'Possui um bolso com zíper.',image:'/catalog-original/banana-estudio.png',category:'Pequenas'},
+ {name:'Mochila Fabi',price:'620,00',size:'40 × 29 × 18 cm',description:'Um bolso frontal e duas divisórias: a primeira com bolso sem zíper e a segunda com bolso com zíper.',image:'/catalog-original/mochila-fabi-estudio.png',category:'Mochilas'},
+ {name:'Mochila Anti Furto',price:'620,00',size:'37 × 27 × 15 cm',description:'Divisória antifurto na parte de trás, dois bolsos frontais com zíper e dois bolsos laterais sem zíper. Possui uma alça pequena.',image:'/catalog-original/mochila-anti-furto-estudio.png',category:'Mochilas'},
+ {name:'Bolsa Birk Baixa',price:'620,00',size:'23 × 37 × 11 cm',description:'Três bolsos internos, sendo um com zíper e dois sem zíper.',image:'/catalog-original/birk-baixa-estudio.png',category:'Estruturadas'},
+ {name:'Bolsa Mari',price:'620,00',size:'26 × 35 × 14 cm',description:'Um bolso traseiro com zíper e duas divisórias: uma com bolso com zíper e outra com bolso sem zíper. Possui um bolso grande central com zíper.',image:'/catalog-original/mari-estudio.png',category:'Grandes'},
+ {name:'Bolsa Lilian',price:'620,00',size:'23 × 31 × 10 cm',description:'Duas divisórias internas: uma com bolso com zíper e outra com bolso sem zíper. Possui um bolso central com zíper.',image:'/catalog-original/lilian-estudio.png',category:'Clássicas'},
  {name:'Bolsa Sol',price:'620,00',size:'30 × 38 × 15 cm',description:'Possui dois bolsos com zíper e um bolso sem zíper.',image:'/catalog-original/sol-estudio.png',category:'Grandes'},
  {name:'Porta celular',price:'280,00',size:'19 × 13,5 × 6 cm',description:'Possui um bolso na parte interna.',image:'/catalog-original/porta-celular-estudio.png',category:'Pequenas'},
  {name:'Capanga 2 divisão',price:'250,00',size:'18 × 19 × 6 cm',description:'Possui três divisórias.',image:'/catalog-original/capanga-2-divisao-estudio.png',category:'Pequenas'},
