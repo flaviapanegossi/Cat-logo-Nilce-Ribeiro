@@ -1,12 +1,17 @@
 """Remove only outer white canvas margins for an edge-to-edge full photo view."""
 from pathlib import Path
+import sys
 import numpy as np
 from PIL import Image
 
 output = Path('public/catalog-zoom').resolve()
 output.mkdir(exist_ok=True)
 for source in Path('public/catalog-normalized').resolve().glob('*.jpg'):
-    with Image.open(source) as opened:
+    if len(sys.argv)>1 and source.name not in sys.argv[1:]:
+        continue
+    # This photograph has fine chains that segmentation can mistake for background.
+    original = Path('public/catalog-original/bolsa-chanel-pp.png') if source.stem=='bolsa-chanel-pp' else source
+    with Image.open(original) as opened:
         im = opened.convert('RGB')
     a = np.asarray(im)
     ys, xs = np.where(a.min(axis=2)<240)
